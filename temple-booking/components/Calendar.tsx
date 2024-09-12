@@ -1,28 +1,28 @@
 // components/Calendar.tsx
 
 import React from "react";
-// import {
-//   addMonths,
-//   subMonths,
-//   format,
-//   startOfMonth,
-//   endOfMonth,
-//   startOfWeek,
-//   endOfWeek,
-//   isSameMonth,
-//   isSameDay,
-//   addDays,
-//   isBefore,
-//   startOfDay,
-// } from 'date-fns';
+import {
+  addMonths,
+  subMonths,
+  format,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  isSameMonth,
+  isSameDay,
+  addDays,
+  isBefore,
+  startOfDay,
+} from "date-fns";
 
-// interface CalendarProps {
-//   bookedDates: Date[];
-//   selectedDates: Date[];
-//   onSelectDate: (date: Date) => void;
-//   isSpecialDate: (date: Date) => boolean;
-//   dayTexts?: { [key: string]: string };
-// }
+interface CalendarProps {
+  bookedDates: Date[];
+  selectedDates: Date[];
+  onSelectDate: (date: Date) => void;
+  isSpecialDate: (date: Date) => boolean;
+  dayTexts?: { [key: string]: string };
+}
 
 const Calendar: React.FC<CalendarProps> = ({
   bookedDates = [],
