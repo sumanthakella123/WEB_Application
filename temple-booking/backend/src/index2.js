@@ -2,14 +2,38 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import axios from 'axios';
+import { promises as fs } from 'fs';
+import { createReadStream, existsSync, mkdirSync, writeFileSync, unlinkSync } from 'fs';
+import { join } from 'path';
 import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+import pkg from 'twilio';
+const { twiml: { VoiceResponse } } = pkg;
+
+// Get current directory name (equivalent to __dirname in CommonJS)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Configuration
 const ELEVEN_LABS_API_KEY = 'sk_973d96eaba952c7324ff728109a19bfe1dc45e81d0d3e20c';
+const OPENAI_API_KEY = 'sk-proj-7svNJygbiYzL8Kqr1qUkT3BlbkFJqDPe8H1gbOSOIXI2xfDY';
+const MANAGER_PHONE = '5189410761';
 
 const app = express();
 const port = 5000;
 
+// Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(
+    session({
+        secret: 'supersecretkey',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { maxAge: 30 * 60 * 1000 },
+    })
+);
 
 // Conversation history template
 const conversationHistoryTemplate = [
