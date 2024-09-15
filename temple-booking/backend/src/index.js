@@ -77,5 +77,47 @@ fastify.register(async (fastify) => {
                 "OpenAI-Beta": "realtime=v1"
             }
         });
+        // Control initial session with OpenAI
+        const initializeSession = () => {
+            const sessionUpdate = {
+                type: 'session.update',
+                session: {
+                    turn_detection: { type: 'server_vad' },
+                    input_audio_format: 'g711_ulaw',
+                    output_audio_format: 'g711_ulaw',
+                    voice: VOICE,
+                    instructions: SYSTEM_MESSAGE,
+                    modalities: ["text", "audio"],
+                    temperature: 0.8,
+                }
+            };
+
+            console.log('Sending session update:', JSON.stringify(sessionUpdate));
+            openAiWs.send(JSON.stringify(sessionUpdate));
+
+            // Uncomment the following line to have AI speak first:
+            // sendInitialConversationItem();
+        };
+
+        // Send initial conversation item if AI talks first
+        const sendInitialConversationItem = () => {
+            const initialConversationItem = {
+                type: 'conversation.item.create',
+                item: {
+                    type: 'message',
+                    role: 'user',
+                    content: [
+                        {
+                            type: 'input_text',
+                            text: 'Namaste! I am Neela, the AI voice assistant from Albany Hindu Temple. You can ask me about temple timings, puja bookings, or upcoming events. How can I assist you today?'
+                        }
+                    ]
+                }
+            };
+
+            if (SHOW_TIMING_MATH) console.log('Sending initial conversation item:', JSON.stringify(initialConversationItem));
+            openAiWs.send(JSON.stringify(initialConversationItem));
+            openAiWs.send(JSON.stringify({ type: 'response.create' }));
+        };
     };
 };
