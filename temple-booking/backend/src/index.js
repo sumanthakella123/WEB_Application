@@ -59,4 +59,23 @@ fastify.all('/incoming-call', async (request, reply) => {
     reply.type('text/xml').send(twimlResponse);
 });
 
+// WebSocket route for media-stream
+fastify.register(async (fastify) => {
+    fastify.get('/media-stream', { websocket: true }, (connection, req) => {
+        console.log('Client connected');
 
+        // Connection-specific state
+        let streamSid = null;
+        let latestMediaTimestamp = 0;
+        let lastAssistantItem = null;
+        let markQueue = [];
+        let responseStartTimestampTwilio = null;
+
+        const openAiWs = new WebSocket('wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01', {
+            headers: {
+                Authorization: `Bearer ${OPENAI_API_KEY}`,
+                "OpenAI-Beta": "realtime=v1"
+            }
+        });
+    };
+};
