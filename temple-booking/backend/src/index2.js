@@ -21,4 +21,9 @@ const conversationHistoryTemplate = [
             'for anyone who want to make puja booking, coollect their name, email address and Puja Name'+
             'If you cannot answer a question or if the user asks for a manager or human, respond with exactly "TRANSFER_TO_MANAGER" as your message. ' +
             'If you detect frustration or multiple repeated questions from the user, respond with "TRANSFER_TO_MANAGER".',
-    },];
+    },
+    {
+        role: 'assistant',
+        content: "Hello, I'm Neela from Albany Hindu Temple. How can I assist you today?",
+    },
+];    
