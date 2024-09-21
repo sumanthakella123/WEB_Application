@@ -31,7 +31,23 @@ const conversationHistoryTemplate = [
 //textToSpeech function
 async function textToSpeech(text, sessionId) {
     try {
-        // Placeholder for API call
+        const response = await axios.post(
+            `https://api.elevenlabs.io/v1/text-to-speech/cgSgspJ2msm6clMCkdW9`,
+            {
+                text: text,
+                model_id: 'eleven_turbo_v2_5',
+                voice_settings: { stability: 0.5, similarity_boost: 0.75 },
+            },
+            {
+                headers: {
+                    'xi-api-key': ELEVEN_LABS_API_KEY,
+                    Accept: 'audio/mpeg',
+                    'Content-Type': 'application/json',
+                },
+                responseType: 'arraybuffer',
+            }
+        );
+        // Placeholder for handling the response
     } catch (error) {
         console.error('Error in textToSpeech:', error.message);
         return null;
