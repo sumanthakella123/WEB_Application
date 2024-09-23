@@ -28,7 +28,10 @@ const conversationHistoryTemplate = [
     },
 ];    
 
-//textToSpeech function
+const { join } = require('path');
+const { writeFileSync } = require('fs');
+
+// Text to Speech Function
 async function textToSpeech(text, sessionId) {
     try {
         const response = await axios.post(
@@ -47,7 +50,9 @@ async function textToSpeech(text, sessionId) {
                 responseType: 'arraybuffer',
             }
         );
-        // Placeholder for handling the response
+        const audioPath = join(__dirname, 'audio', `${sessionId}.mp3`);
+        writeFileSync(audioPath, response.data);
+        return audioPath;
     } catch (error) {
         console.error('Error in textToSpeech:', error.message);
         return null;
