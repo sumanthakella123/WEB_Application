@@ -30,8 +30,9 @@ const conversationHistoryTemplate = [
 
 const { join } = require('path');
 const { writeFileSync } = require('fs');
+const twilio = require('twilio');
 
-// Text to Speech Function
+// Complete textToSpeech function with response handling
 async function textToSpeech(text, sessionId) {
     try {
         const response = await axios.post(
