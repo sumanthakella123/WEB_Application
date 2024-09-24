@@ -32,7 +32,7 @@ const { join } = require('path');
 const { writeFileSync } = require('fs');
 const twilio = require('twilio');
 
-// Complete textToSpeech function with response handling
+// Helper function: Generate TTS audio
 async function textToSpeech(text, sessionId) {
     try {
         const response = await axios.post(
@@ -51,6 +51,7 @@ async function textToSpeech(text, sessionId) {
                 responseType: 'arraybuffer',
             }
         );
+
         const audioPath = join(__dirname, 'audio', `${sessionId}.mp3`);
         writeFileSync(audioPath, response.data);
         return audioPath;
@@ -58,4 +59,5 @@ async function textToSpeech(text, sessionId) {
         console.error('Error in textToSpeech:', error.message);
         return null;
     }
+
 }
