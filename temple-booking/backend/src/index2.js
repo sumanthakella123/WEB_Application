@@ -28,10 +28,6 @@ const conversationHistoryTemplate = [
     },
 ];    
 
-const { join } = require('path');
-const { writeFileSync } = require('fs');
-const twilio = require('twilio');
-
 // Helper function: Generate TTS audio
 async function textToSpeech(text, sessionId) {
     try {
