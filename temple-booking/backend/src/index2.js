@@ -57,3 +57,14 @@ async function textToSpeech(text, sessionId) {
     }
 
 }
+
+const twilio = require('twilio');
+
+// Initialize Twilio client with environment variables
+async function generateResponse(userInput, conversationHistory) {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const client = twilio(accountSid, authToken);
+}
+
+
