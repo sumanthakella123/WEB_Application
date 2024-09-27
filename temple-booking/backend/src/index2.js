@@ -60,11 +60,22 @@ async function textToSpeech(text, sessionId) {
 
 const twilio = require('twilio');
 
-// Initialize Twilio client with environment variables
+// Add message sending logic within try block
 async function generateResponse(userInput, conversationHistory) {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     const client = twilio(accountSid, authToken);
+
+    try {
+        const message = await client.messages.create({
+            body: userInput,
+            from: '+1234567890',
+            to: '+0987654321'
+        });
+        console.log('Message sent successfully:', message.sid);
+    } catch (error) {
+        console.error('Error sending message:', error.message);
+    }
 }
 
 
