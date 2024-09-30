@@ -61,6 +61,7 @@ async function textToSpeech(text, sessionId) {
 const twilio = require('twilio');
 
 // Add message sending logic within try block
+// Enhance error handling and add response logic
 async function generateResponse(userInput, conversationHistory) {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -73,8 +74,10 @@ async function generateResponse(userInput, conversationHistory) {
             to: '+0987654321'
         });
         console.log('Message sent successfully:', message.sid);
+        return message.sid;
     } catch (error) {
-        console.error('Error sending message:', error.message);
+        console.error('Error in generateResponse:', error.message);
+        return "TRANSFER_TO_MANAGER";
     }
 }
 
