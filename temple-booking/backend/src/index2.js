@@ -10,7 +10,7 @@ const ELEVEN_LABS_API_KEY = 'sk_973d96eaba952c7324ff728109a19bfe1dc45e81d0d3e20c
 const app = express();
 const port = 5000;
 
-//Tested Code
+
 // Conversation history template
 const conversationHistoryTemplate = [
     {
@@ -76,10 +76,7 @@ async function generateResponse(userInput, conversationHistory) {
 
         console.log('Message sent successfully:', message.sid);
         return message.sid;
-    } catch (error) {
-        console.error('Error in generateResponse:', error.message);
-        return "TRANSFER_TO_MANAGER";
     }
-}
+
 
 
