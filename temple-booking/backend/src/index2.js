@@ -73,10 +73,7 @@ async function generateResponse(userInput, conversationHistory) {
             from: '+1234567890',
             to: '+0987654321'
         });
-
-        console.log('Message sent successfully:', message.sid);
-        return message.sid;
-    }
-
+}
+}
 
 
