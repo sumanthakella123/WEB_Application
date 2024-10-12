@@ -60,82 +60,82 @@ export default function CalendarView() {
     fetchSpecialDates();
   }, [deity]);
 
-  // const isSpecialDate = (date: Date): boolean => {
-  //   return specialDates.some((specialDate) => isSameDay(specialDate.date, date));
-  // };
+  const isSpecialDate = (date: Date): boolean => {
+    return specialDates.some((specialDate) => isSameDay(specialDate.date, date));
+  };
 
-  // const getFestivalName = (date: Date): string | null => {
-  //   const specialDate = specialDates.find((sd) => isSameDay(sd.date, date));
-  //   return specialDate?.festivalName || null;
-  // };
+  const getFestivalName = (date: Date): string | null => {
+    const specialDate = specialDates.find((sd) => isSameDay(sd.date, date));
+    return specialDate?.festivalName || null;
+  };
 
-  // // Create dayTexts object for the Calendar component
-  // const dayTexts = specialDates.reduce((acc: { [key: string]: string }, curr) => {
-  //   if (curr.festivalName) {
-  //     acc[curr.date.toISOString().split('T')[0]] = curr.festivalName;
-  //   }
-  //   return acc;
-  // }, {});
+  // Create dayTexts object for the Calendar component
+  const dayTexts = specialDates.reduce((acc: { [key: string]: string }, curr) => {
+    if (curr.festivalName) {
+      acc[curr.date.toISOString().split('T')[0]] = curr.festivalName;
+    }
+    return acc;
+  }, {});
 
-  // const handleSelectDate = (date: Date) => {
-  //   const dateString = date.toDateString();
-  //   const isAlreadySelected = selectedDates.some(
-  //     (selectedDate) => selectedDate.toDateString() === dateString
-  //   );
+  const handleSelectDate = (date: Date) => {
+    const dateString = date.toDateString();
+    const isAlreadySelected = selectedDates.some(
+      (selectedDate) => selectedDate.toDateString() === dateString
+    );
 
-  //   if (isAlreadySelected) {
-  //     setSelectedDates((prevDates) =>
-  //       prevDates.filter((d) => d.toDateString() !== dateString)
-  //     );
-  //     setErrorMessage('');
-  //   } else {
-  //     const special = isSpecialDate(date);
-  //     const specialCount = selectedDates.filter((d) => isSpecialDate(d)).length;
-  //     const normalCount = selectedDates.length - specialCount;
+    if (isAlreadySelected) {
+      setSelectedDates((prevDates) =>
+        prevDates.filter((d) => d.toDateString() !== dateString)
+      );
+      setErrorMessage('');
+    } else {
+      const special = isSpecialDate(date);
+      const specialCount = selectedDates.filter((d) => isSpecialDate(d)).length;
+      const normalCount = selectedDates.length - specialCount;
 
-  //     if (special && specialCount >= MAX_SPECIAL_DAYS) {
-  //       setErrorMessage(`You can only select ${MAX_SPECIAL_DAYS} special day.`);
-  //       return;
-  //     }
+      if (special && specialCount >= MAX_SPECIAL_DAYS) {
+        setErrorMessage(`You can only select ${MAX_SPECIAL_DAYS} special day.`);
+        return;
+      }
 
-  //     if (!special && normalCount >= MAX_NORMAL_DAYS) {
-  //       setErrorMessage(`You can only select ${MAX_NORMAL_DAYS} normal days.`);
-  //       return;
-  //     }
+      if (!special && normalCount >= MAX_NORMAL_DAYS) {
+        setErrorMessage(`You can only select ${MAX_NORMAL_DAYS} normal days.`);
+        return;
+      }
 
-  //     setSelectedDates((prevDates) => [...prevDates, date]);
-  //     setErrorMessage('');
-  //   }
-  // };
+      setSelectedDates((prevDates) => [...prevDates, date]);
+      setErrorMessage('');
+    }
+  };
 
-  // const handleRemoveDate = (date: Date) => {
-  //   const dateString = date.toDateString();
-  //   setSelectedDates((prevDates) =>
-  //     prevDates.filter((d) => d.toDateString() !== dateString)
-  //   );
-  //   setErrorMessage('');
-  // };
+  const handleRemoveDate = (date: Date) => {
+    const dateString = date.toDateString();
+    setSelectedDates((prevDates) =>
+      prevDates.filter((d) => d.toDateString() !== dateString)
+    );
+    setErrorMessage('');
+  };
 
-  // const getPriceForDate = (date: Date): number => {
-  //   return isSpecialDate(date) ? 100 : 50;
-  // };
+  const getPriceForDate = (date: Date): number => {
+    return isSpecialDate(date) ? 100 : 50;
+  };
 
-  // const totalAmount = selectedDates.reduce((total, date) => {
-  //   return total + getPriceForDate(date);
-  // }, 0);
+  const totalAmount = selectedDates.reduce((total, date) => {
+    return total + getPriceForDate(date);
+  }, 0);
 
-  // const handleProceed = () => {
-  //   if (selectedDates.length === 0) {
-  //     alert('Please select at least one date to proceed.');
-  //     return;
-  //   }
+  const handleProceed = () => {
+    if (selectedDates.length === 0) {
+      alert('Please select at least one date to proceed.');
+      return;
+    }
 
-  //   const dateStrings = selectedDates.map((date) => date.toISOString());
-  //   router.push({
-  //     pathname: '/vastra-seva/details',
-  //     query: { deity, dates: dateStrings },
-  //   });
-  // };
+    const dateStrings = selectedDates.map((date) => date.toISOString());
+    router.push({
+      pathname: '/vastra-seva/details',
+      query: { deity, dates: dateStrings },
+    });
+  };
 
   return (
     <div className="h-screen p-6 bg-gray-50">
