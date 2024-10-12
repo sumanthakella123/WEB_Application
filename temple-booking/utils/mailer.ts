@@ -122,5 +122,4 @@ export const sendBookingConfirmation = async (bookingDetails: BookingDetails) =>
     html: emailContent,
     attachments,
   });
-
 };
