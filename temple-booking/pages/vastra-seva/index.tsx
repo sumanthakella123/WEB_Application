@@ -1,21 +1,21 @@
-import { useRouter } from 'next/router';
-import DeityCard from '../../components/DeityCard';
+import { useRouter } from "next/router";
+import DeityCard from "../../components/DeityCard";
 
 const deities = [
-  { name: 'Siva' },
-  { name: 'Parvathi' },
-  { name: 'Lakshmi Narayana' },
-  { name: 'Ganapathi' },
-  { name: 'Subrahmanya' },
-  { name: 'Ram Parivar' },
+  { name: "Siva" },
+  { name: "Parvathi" },
+  { name: "Lakshmi Narayana" },
+  { name: "Ganapathi" },
+  { name: "Subrahmanya" },
+  { name: "Ram Parivar" },
 ];
 
-// export default function DeitySelection() {
-//   const router = useRouter();
+export default function DeitySelection() {
+  const router = useRouter();
 
-//   const selectDeity = (deityName: string) => {
-//     router.push(`/vastra-seva/calendar?deity=${encodeURIComponent(deityName)}`);
-//   };
+  const selectDeity = (deityName: string) => {
+    router.push(`/vastra-seva/calendar?deity=${encodeURIComponent(deityName)}`);
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -31,12 +31,12 @@ const deities = [
               Vastra Seva
             </h2>
           </div>
-          
+
           <div className="inline-block bg-orange-100 px-6 py-2 rounded-full shadow-sm">
             <p className="text-orange-800 font-medium">Please Select a Deity</p>
           </div>
         </div>
-        
+
         {/* Deity Selection Grid - Always 2 columns */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {deities.map((deity) => (
