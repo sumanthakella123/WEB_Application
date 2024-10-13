@@ -77,3 +77,11 @@ async function generateResponse(userInput, conversationHistory) {
 }
 
 
+//Google cloud text-to-speech
+const axios = require('axios');
+const textToSpeech = require('@google-cloud/text-to-speech');
+const ttsClient = new textToSpeech.TextToSpeechClient();
+
+async function generateResponse(userInput, conversationHistory) {
+    // Placeholder for actual implementation
+}
