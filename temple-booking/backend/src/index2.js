@@ -61,27 +61,34 @@ async function textToSpeech(text, sessionId) {
 
 const twilio = require('twilio');
 
-// Response Generation
-async function generateResponse(userInput, conversationHistory) {
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
-    const client = twilio(accountSid, authToken);
 
-    try {
-        const message = await client.messages.create({
-            body: userInput,
-            from: '+1234567890',
-            to: '+0987654321'
-        });
-}
-}
-
-
-//Google cloud text-to-speech
+//Google cloud services
 const axios = require('axios');
 const textToSpeech = require('@google-cloud/text-to-speech');
 const ttsClient = new textToSpeech.TextToSpeechClient();
 
 async function generateResponse(userInput, conversationHistory) {
-    // Placeholder for actual implementation
+    try {
+        const response = await axios.post(
+            'https://api.openai.com/v1/chat/completions',
+            {
+                model: 'gpt-4',
+                messages: conversationHistory,
+                max_tokens: 50,
+                temperature: 0.7,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        const textResponse = response.data.choices[0].message.content;
+        return textResponse;
+    } catch (error) {
+        console.error('Error in generating text response:', error.message);
+        return "TRANSFER_TO_MANAGER";
+    }
 }
