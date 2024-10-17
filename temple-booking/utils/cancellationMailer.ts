@@ -23,6 +23,8 @@ interface SevaBooking {
   venueAddress: string | null;
 }
 
+// Configuring the nodemailer transporter with environment variables
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT || '587'),
@@ -33,6 +35,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Function to send a cancellation email for a Seva booking
+
 export const sendCancellationEmail = async (booking: SevaBooking) => {
   const formatDate = (date: Date | string) => {
     return new Date(date).toLocaleDateString('en-US', {
@@ -42,6 +46,8 @@ export const sendCancellationEmail = async (booking: SevaBooking) => {
       day: 'numeric',
     });
   };
+
+  // Defining the email content in HTML format
 
   const emailContent = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -130,6 +136,8 @@ export const sendCancellationEmail = async (booking: SevaBooking) => {
       </p>
     </div>
   `;
+  
+  // Sending the email using the configured transporter
 
   return await transporter.sendMail({
     from: process.env.SMTP_FROM_EMAIL,
