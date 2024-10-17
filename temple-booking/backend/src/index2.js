@@ -67,7 +67,7 @@ const axios = require('axios');
 const textToSpeech = require('@google-cloud/text-to-speech');
 const ttsClient = new textToSpeech.TextToSpeechClient();
 
-async function generateResponse(userInput, conversationHistory) {
+async function generateTextResponse(userInput, conversationHistory) {
     try {
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
@@ -84,11 +84,26 @@ async function generateResponse(userInput, conversationHistory) {
                 },
             }
         );
-
-        const textResponse = response.data.choices[0].message.content;
-        return textResponse;
+        return response.data.choices[0].message.content;  // Return the text part of the response
     } catch (error) {
-        console.error('Error in generating text response:', error.message);
-        return "TRANSFER_TO_MANAGER";
+        console.error('Error fetching text from OpenAI:', error.message);
+        throw error;  // Re-throw to handle it in the main function
     }
 }
+
+// Function to convert text response to audio using Google Text-to-Speech
+async function generateAudioResponse(textResponse) {
+    try {
+        const request = {
+            input: {text: textResponse},
+            voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
+            audioConfig: {audioEncoding: 'MP3'},
+        };
+        const [response] = await ttsClient.synthesizeSpeech(request);
+        return response.audioContent;  // Return the audio content
+    } catch (error) {
+        console.error('Error converting text to speech:', error.message);
+        throw error;  // Re-throw to handle it in the main function
+    }
+}
+
