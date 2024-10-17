@@ -1,4 +1,4 @@
-import css from '../css/OnlineServices.module.css';
+import css from '../../css/OnlineServices.module.css';
 import { Link } from 'react-router-dom';
 
 const OnlineServices = () => {

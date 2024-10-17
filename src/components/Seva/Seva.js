@@ -1,5 +1,5 @@
-import SevaHeader from './SevaHeader';
-import Footer from './Footer';
+import SevaHeader from '../Headers/SevaHeader';
+import Footer from '../Footer';
 import SevaForm from './SevaForm';
 const Seva=()=>
 {

@@ -1,6 +1,5 @@
-import HomeHeader from './HomeHeader';
-import CauroselComponent from './CauroselComponent';
-import Footer from './Footer';
+import HomeHeader from '../Headers/HomeHeader';
+import Footer from '../Footer';
 import OnlineServices from './OnlineServices';
 const Home=()=>
 {

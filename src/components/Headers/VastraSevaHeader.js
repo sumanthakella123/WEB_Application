@@ -1,4 +1,4 @@
-import css from  '../css/HomeHeader.module.css';
+import css from  '../../css/HomeHeader.module.css';
 import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOm } from '@fortawesome/free-solid-svg-icons';

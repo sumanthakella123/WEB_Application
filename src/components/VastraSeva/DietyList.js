@@ -1,5 +1,5 @@
 import React from 'react';
-import css from '../css/DietyList.module.css';
+import css from '../../css/DietyList.module.css';
 import {Link} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faOm } from '@fortawesome/free-solid-svg-icons';

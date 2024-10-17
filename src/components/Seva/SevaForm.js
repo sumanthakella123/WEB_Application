@@ -1,5 +1,5 @@
 import React from 'react';
-import css from '../css/SevaForm.module.css';
+import css from '../../css/SevaForm.module.css';
 import {useNavigate} from 'react-router-dom';
 
 

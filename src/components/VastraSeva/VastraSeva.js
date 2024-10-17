@@ -1,6 +1,6 @@
 import React from 'react';
-import VastraSevaHeader from './VastraSevaHeader';
-import Footer from './Footer';
+import VastraSevaHeader from '../Headers/VastraSevaHeader';
+import Footer from '../Footer';
 import DietyList from './DietyList';
 import { useEffect,useState} from 'react';
 const VastraSeva=()=>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Routes, Route} from 'react-router-dom';
-import Home from './components/Home';
+import Home from './components/Home/Home.js';
 import Diety from './components/Diety';
-import VastraSeva from './components/VastraSeva';
+import VastraSeva from './components/VastraSeva/VastraSeva.js';
 import BookingDetails from './components/BookingDetails';
-import Seva from './components/Seva';
-import Payment from './components/Payment';
-import AboutUs from './components/AboutUs';
-import ContactUs from './components/ContactUs';
-import Ai from './components/Ai';
+import Seva from './components/Seva/Seva.js';
+import Payment from './components/Seva/Payment/Payment.js';
+import AboutUs from './components/AboutUs/AboutUs.js';
+import ContactUs from './components/ContactUs/ContactUs.js';
+import Ai from './components/Ai/Ai.js';
 
 
 const App=()=>

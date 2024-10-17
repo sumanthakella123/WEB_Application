@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import VastraSevaHeader from './VastraSevaHeader';
+import VastraSevaHeader from './Headers/VastraSevaHeader';
 import Footer from './Footer';
 
 const Diety = () => {
