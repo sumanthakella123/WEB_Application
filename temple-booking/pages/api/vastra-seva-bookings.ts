@@ -17,20 +17,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       requests,
     } = req.body;
 
-    // // Validate required fields
-    // if (!deity || !Array.isArray(dates) || dates.length === 0 || !firstName || !lastName || !email || !phone) {
-    //   res.status(400).json({ message: 'Missing required fields.' });
-    //   return;
-    // }
+    // Validate required fields
+    if (!deity || !Array.isArray(dates) || dates.length === 0 || !firstName || !lastName || !email || !phone) {
+      res.status(400).json({ message: 'Missing required fields.' });
+      return;
+    }
 
-    // // Check if any date is in the past
-    // const today = startOfDay(new Date());
-    // const invalidDates = dates.filter((dateStr: string) => isBefore(new Date(dateStr), today));
+    // Check if any date is in the past
+    const today = startOfDay(new Date());
+    const invalidDates = dates.filter((dateStr: string) => isBefore(new Date(dateStr), today));
 
-    // if (invalidDates.length > 0) {
-    //   res.status(400).json({ message: 'Cannot book dates in the past.' });
-    //   return;
-    // }
+    if (invalidDates.length > 0) {
+      res.status(400).json({ message: 'Cannot book dates in the past.' });
+      return;
+    }
 
     try {
       // Fetch special dates from the database
