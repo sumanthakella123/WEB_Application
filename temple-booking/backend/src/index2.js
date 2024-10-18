@@ -107,3 +107,18 @@ async function generateAudioResponse(textResponse) {
     }
 }
 
+async function generateResponse(userInput, conversationHistory) {
+    try {
+        const textResponse = await generateTextResponse(userInput, conversationHistory);
+        const audioContent = await generateAudioResponse(textResponse);
+
+        return {
+            text: textResponse,
+            audioContent: audioContent  // Assuming the front end will handle Blob or similar for audio playback
+        };
+    } catch (error) {
+        console.error('Error in generating response:', error.message);
+        return "TRANSFER_TO_MANAGER";  // Fallback action
+    }
+}
+
