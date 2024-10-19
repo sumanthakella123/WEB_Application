@@ -67,6 +67,7 @@ const axios = require('axios');
 const textToSpeech = require('@google-cloud/text-to-speech');
 const ttsClient = new textToSpeech.TextToSpeechClient();
 
+// Function to fetch response from OpenAI's GPT-4
 async function generateTextResponse(userInput, conversationHistory) {
     try {
         const response = await axios.post(
@@ -107,6 +108,7 @@ async function generateAudioResponse(textResponse) {
     }
 }
 
+// Main function to generate response and handle both text and speech conversion
 async function generateResponse(userInput, conversationHistory) {
     try {
         const textResponse = await generateTextResponse(userInput, conversationHistory);
@@ -122,3 +124,7 @@ async function generateResponse(userInput, conversationHistory) {
     }
 }
 
+// Example usage
+generateResponse("Hello, how can I assist you?", [{role: "user", content: "Hello"}])
+    .then(response => console.log(response))
+    .catch(err => console.error('Failed to generate response:', err));
