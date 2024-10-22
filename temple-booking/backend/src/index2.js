@@ -124,7 +124,15 @@ async function generateResponse(userInput, conversationHistory) {
     }
 }
 
-// Example usage
-generateResponse("Hello, how can I assist you?", [{role: "user", content: "Hello"}])
-    .then(response => console.log(response))
-    .catch(err => console.error('Failed to generate response:', err));
+//OpenAPI services
+axios.defaults.baseURL = 'https://api.openai.com/v1';
+axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.OPENAI_API_KEY}`;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+// Placeholder function setup (to be implemented in future commits)
+async function generateResponse(userInput, conversationHistory) {
+    console.log('Function to be implemented.');
+}
+
+
+generateResponse("Hello, world!", [{role: "user", content: "Hello, how can I assist?"}]);
