@@ -129,10 +129,24 @@ axios.defaults.baseURL = 'https://api.openai.com/v1';
 axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.OPENAI_API_KEY}`;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-// Placeholder function setup (to be implemented in future commits)
+// index.js
 async function generateResponse(userInput, conversationHistory) {
-    console.log('Function to be implemented.');
+    try {
+        const response = await axios.post('/chat/completions', {
+            model: 'gpt-4',
+            messages: conversationHistory,
+            max_tokens: 50,
+            temperature: 0.7,
+        });
+
+        return response.data.choices[0].message.content;
+    } catch (error) {
+        console.error('Error in generateResponse:', error.message);
+        return "TRANSFER_TO_MANAGER";
+    }
 }
 
-
-generateResponse("Hello, world!", [{role: "user", content: "Hello, how can I assist?"}]);
+// Example call to function (for testing)
+generateResponse("How is the weather today?", [{role: "system", content: "You are talking to a weather bot."}])
+    .then(response => console.log('Generated Response:', response))
+    .catch(err => console.error('Failed to generate response:', err));
