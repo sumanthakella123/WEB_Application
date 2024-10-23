@@ -5,35 +5,35 @@ import { X, Pencil, Trash2 } from 'lucide-react';
 import DashboardLayout from '../../../components/DashboardLayout';
 import prisma from '../../../utils/prisma';
 
-// interface SevaBooking {
-//   id: number;
-//   sevaType: string;
-//   poojaDetails: string | null;
-//   date: string;
-//   amount: number;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   phone: string;
-//   gotram: string | null;
-//   requests: string | null;
-//   location: string;
-//   priestPreference: string;
-//   muhuratRequired: boolean;
-//   namesAndNakshatras: string | null;
-//   serviceDate: string;
-//   timeWindow: string | null;
-//   venueAddress: string | null;
-// }
+interface SevaBooking {
+  id: number;
+  sevaType: string;
+  poojaDetails: string | null;
+  date: string;
+  amount: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  gotram: string | null;
+  requests: string | null;
+  location: string;
+  priestPreference: string;
+  muhuratRequired: boolean;
+  namesAndNakshatras: string | null;
+  serviceDate: string;
+  timeWindow: string | null;
+  venueAddress: string | null;
+}
 
-// interface SevaBookingsProps {
-//   initialBookings: SevaBooking[]; // Changed from bookings to initialBookings
-// }
+interface SevaBookingsProps {
+  initialBookings: SevaBooking[]; // Changed from bookings to initialBookings
+}
 
-// interface ApiResponse {
-//   success: boolean;
-//   message: string;
-// }
+interface ApiResponse {
+  success: boolean;
+  message: string;
+}
 
 
 const EditBookingModal = ({ 
@@ -268,121 +268,121 @@ export default function SevaBookings({ initialBookings }: SevaBookingsProps) {
 
 
 
-  // // Add filtering UI
-  // const sevaTypes = Array.from(new Set(bookings.map(booking => booking.sevaType)));
+  // Add filtering UI
+  const sevaTypes = Array.from(new Set(bookings.map(booking => booking.sevaType)));
 
-  // useEffect(() => {
-  //   let filtered = bookings;
+  useEffect(() => {
+    let filtered = bookings;
 
-  //   if (selectedSevaType) {
-  //     filtered = filtered.filter((booking) => booking.sevaType === selectedSevaType);
-  //   }
+    if (selectedSevaType) {
+      filtered = filtered.filter((booking) => booking.sevaType === selectedSevaType);
+    }
 
-  //   if (searchQuery) {
-  //     filtered = filtered.filter((booking) => {
-  //       const searchString = `${booking.firstName} ${booking.lastName} ${booking.email} ${booking.phone}`.toLowerCase();
-  //       return searchString.includes(searchQuery.toLowerCase());
-  //     });
-  //   }
+    if (searchQuery) {
+      filtered = filtered.filter((booking) => {
+        const searchString = `${booking.firstName} ${booking.lastName} ${booking.email} ${booking.phone}`.toLowerCase();
+        return searchString.includes(searchQuery.toLowerCase());
+      });
+    }
 
-  //   if (sortColumn) {
-  //     filtered = [...filtered].sort((a, b) => {
-  //       const valueA = a[sortColumn];
-  //       const valueB = b[sortColumn];
+    if (sortColumn) {
+      filtered = [...filtered].sort((a, b) => {
+        const valueA = a[sortColumn];
+        const valueB = b[sortColumn];
 
-  //       if (typeof valueA === 'string' && typeof valueB === 'string') {
-  //         return sortDirection === 'asc' 
-  //           ? valueA.localeCompare(valueB)
-  //           : valueB.localeCompare(valueA);
-  //       }
+        if (typeof valueA === 'string' && typeof valueB === 'string') {
+          return sortDirection === 'asc' 
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        }
 
-  //       if (typeof valueA === 'number' && typeof valueB === 'number') {
-  //         return sortDirection === 'asc' 
-  //           ? valueA - valueB
-  //           : valueB - valueA;
-  //       }
+        if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return sortDirection === 'asc' 
+            ? valueA - valueB
+            : valueB - valueA;
+        }
 
-  //       return 0;
-  //     });
-  //   }
+        return 0;
+      });
+    }
 
-  //   setFilteredBookings(filtered);
-  // }, [searchQuery, selectedSevaType, bookings, sortColumn, sortDirection]);
+    setFilteredBookings(filtered);
+  }, [searchQuery, selectedSevaType, bookings, sortColumn, sortDirection]);
 
-  // const handleSort = (column: keyof SevaBooking) => {
-  //   if (sortColumn === column) {
-  //     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  //   } else {
-  //     setSortColumn(column);
-  //     setSortDirection('asc');
-  //   }
-  // };
+  const handleSort = (column: keyof SevaBooking) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortColumn(column);
+      setSortDirection('asc');
+    }
+  };
 
-  // const handleEdit = (booking: SevaBooking) => {
-  //   setEditingBookingId(booking.id);
-  //   setEditedBooking({ ...booking });
-  //   setIsModalOpen(true);
-  // };
+  const handleEdit = (booking: SevaBooking) => {
+    setEditingBookingId(booking.id);
+    setEditedBooking({ ...booking });
+    setIsModalOpen(true);
+  };
 
-  // const handleDeleteRequest = (id: number) => {
-  //   setBookingToDelete(id);
-  //   setIsDeleteModalOpen(true);
-  // };
+  const handleDeleteRequest = (id: number) => {
+    setBookingToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
 
-  // // Updated handler functions
-  // const handleDeleteConfirm = async () => {
-  //   if (bookingToDelete) {
-  //     try {
-  //       const response = await fetch(`/api/seva-bookings/${bookingToDelete}`, {
-  //         method: 'DELETE',
-  //       });
+  // Updated handler functions
+  const handleDeleteConfirm = async () => {
+    if (bookingToDelete) {
+      try {
+        const response = await fetch(`/api/seva-bookings/${bookingToDelete}`, {
+          method: 'DELETE',
+        });
         
-  //       if (!response.ok) {
-  //         throw new Error('Failed to delete booking');
-  //       }
+        if (!response.ok) {
+          throw new Error('Failed to delete booking');
+        }
         
-  //       setBookings(bookings.filter((booking) => booking.id !== bookingToDelete));
-  //       setIsDeleteModalOpen(false);
-  //     } catch (error) {
-  //       console.error('Error deleting booking:', error);
-  //     }
-  //   }
-  // };
+        setBookings(bookings.filter((booking) => booking.id !== bookingToDelete));
+        setIsDeleteModalOpen(false);
+      } catch (error) {
+        console.error('Error deleting booking:', error);
+      }
+    }
+  };
   
-  // const handleSave = async () => {
-  //   if (editingBookingId && editedBooking) {
-  //     try {
-  //       const response = await fetch(`/api/seva-bookings/${editingBookingId}`, {
-  //         method: 'PUT',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           ...editedBooking,
-  //           amount: parseFloat(editedBooking.amount?.toString() || '0'),
-  //           serviceDate: editedBooking.serviceDate,
-  //           muhuratRequired: Boolean(editedBooking.muhuratRequired),
-  //         }),
-  //       });
+  const handleSave = async () => {
+    if (editingBookingId && editedBooking) {
+      try {
+        const response = await fetch(`/api/seva-bookings/${editingBookingId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...editedBooking,
+            amount: parseFloat(editedBooking.amount?.toString() || '0'),
+            serviceDate: editedBooking.serviceDate,
+            muhuratRequired: Boolean(editedBooking.muhuratRequired),
+          }),
+        });
   
-  //       if (!response.ok) {
-  //         throw new Error('Failed to update booking');
-  //       }
+        if (!response.ok) {
+          throw new Error('Failed to update booking');
+        }
   
-  //       const updatedBooking = await response.json();
-  //       setBookings(bookings.map((booking) =>
-  //         booking.id === editingBookingId ? updatedBooking : booking
-  //       ));
-  //       setIsModalOpen(false);
-  //     } catch (error) {
-  //       console.error('Error saving booking:', error);
-  //     }
-  //   }
-  // };
+        const updatedBooking = await response.json();
+        setBookings(bookings.map((booking) =>
+          booking.id === editingBookingId ? updatedBooking : booking
+        ));
+        setIsModalOpen(false);
+      } catch (error) {
+        console.error('Error saving booking:', error);
+      }
+    }
+  };
 
-  // const handleInputChange = (field: keyof SevaBooking, value: string | number | boolean) => {
-  //   setEditedBooking((prev) => prev ? ({ ...prev, [field]: value }) : null);
-  // };
+  const handleInputChange = (field: keyof SevaBooking, value: string | number | boolean) => {
+    setEditedBooking((prev) => prev ? ({ ...prev, [field]: value }) : null);
+  };
 
   return (
     <DashboardLayout>
