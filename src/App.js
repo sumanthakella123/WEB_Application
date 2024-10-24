@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route} from 'react-router-dom';
 import Home from './components/Home/Home.js';
-import Diety from './components/Diety';
+import Diety from './components/VastraSeva/Diety/Diety.js';
 import VastraSeva from './components/VastraSeva/VastraSeva.js';
 import BookingDetails from './components/BookingDetails';
 import Seva from './components/Seva/Seva.js';

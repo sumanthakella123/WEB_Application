@@ -1,17 +1,14 @@
-import SevaHeader from '../Headers/SevaHeader';
-import Footer from '../Footer';
-import SevaForm from './SevaForm';
-const Seva=()=>
-{
-    return (
-        <div>
-            <SevaHeader/>
-            <SevaForm/>
-            <Footer/>
-
-        </div>
-    )
-
+import HomeHeader from "../Headers/HomeHeader";
+import Footer from "../Footer";
+import SevaForm from "./SevaForm";
+const Seva = () => {
+  return (
+    <div>
+      <HomeHeader />
+      <SevaForm />
+      <Footer />
+    </div>
+  );
 };
 
 export default Seva;
