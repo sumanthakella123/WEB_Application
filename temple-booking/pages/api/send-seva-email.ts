@@ -20,8 +20,30 @@ export default async function handler(
 
   const { bookingDetails } = req.body;
 
-  
-
+  try {
+    // Create booking in database
+    const newBooking = await prisma.sevaBooking.create({
+      data: {
+        sevaType: bookingDetails.pooja,
+        poojaDetails: bookingDetails.poojaDetails ?? null,
+        date: new Date(),
+        amount: 0,
+        firstName: bookingDetails.firstName,
+        lastName: bookingDetails.lastName,
+        email: bookingDetails.email,
+        phone: bookingDetails.contact,
+        gotram: bookingDetails.gotram ?? null,
+        requests: bookingDetails.requests ?? null,
+        location: bookingDetails.location,
+        priestPreference: bookingDetails.priestPreference,
+        muhuratRequired: bookingDetails.muhuratRequired === 'Yes',
+        namesAndNakshatras: bookingDetails.namesAndNakshatras ?? null,
+        serviceDate: new Date(bookingDetails.serviceDate),
+        timeWindow: bookingDetails.timeWindow ?? null,
+        venueAddress: bookingDetails.venueAddress ?? null,
+      },
+    });
+    
     // Send confirmation email
     await sendBookingConfirmation(bookingDetails);
 

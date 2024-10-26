@@ -13,12 +13,14 @@ export default async function handler(
         message: 'Reminders processed successfully',
         ...result
       });
-    } catch (error: any) {
+    } 
+    catch (error: any) {
       console.error('Error processing reminders:', error);
       res.status(500).json({ 
         message: error.message || 'Failed to process reminders' 
       });
     }
+
   } else {
     res.setHeader('Allow', ['POST']);
     res.status(405).json({ message: `Method ${req.method} not allowed.` });
