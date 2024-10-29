@@ -27,7 +27,7 @@ const conversationHistoryTemplate = [
         role: 'assistant',
         content: "Hello, I'm Neela from Albany Hindu Temple. How can I assist you today?",
     },
-];    
+];
 
 // Helper function: Generate TTS audio
 async function textToSpeech(text, sessionId) {
@@ -57,71 +57,6 @@ async function textToSpeech(text, sessionId) {
         return null;
     }
 
-}
-
-const twilio = require('twilio');
-
-
-//Google cloud services
-const axios = require('axios');
-const textToSpeech = require('@google-cloud/text-to-speech');
-const ttsClient = new textToSpeech.TextToSpeechClient();
-
-// Function to fetch response from OpenAI's GPT-4
-async function generateTextResponse(userInput, conversationHistory) {
-    try {
-        const response = await axios.post(
-            'https://api.openai.com/v1/chat/completions',
-            {
-                model: 'gpt-4',
-                messages: conversationHistory,
-                max_tokens: 50,
-                temperature: 0.7,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        return response.data.choices[0].message.content;  // Return the text part of the response
-    } catch (error) {
-        console.error('Error fetching text from OpenAI:', error.message);
-        throw error;  // Re-throw to handle it in the main function
-    }
-}
-
-// Function to convert text response to audio using Google Text-to-Speech
-async function generateAudioResponse(textResponse) {
-    try {
-        const request = {
-            input: {text: textResponse},
-            voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
-            audioConfig: {audioEncoding: 'MP3'},
-        };
-        const [response] = await ttsClient.synthesizeSpeech(request);
-        return response.audioContent;  // Return the audio content
-    } catch (error) {
-        console.error('Error converting text to speech:', error.message);
-        throw error;  // Re-throw to handle it in the main function
-    }
-}
-
-// Main function to generate response and handle both text and speech conversion
-async function generateResponse(userInput, conversationHistory) {
-    try {
-        const textResponse = await generateTextResponse(userInput, conversationHistory);
-        const audioContent = await generateAudioResponse(textResponse);
-
-        return {
-            text: textResponse,
-            audioContent: audioContent  // Assuming the front end will handle Blob or similar for audio playback
-        };
-    } catch (error) {
-        console.error('Error in generating response:', error.message);
-        return "TRANSFER_TO_MANAGER";  // Fallback action
-    }
 }
 
 async function generateResponse(userInput, conversationHistory) {
