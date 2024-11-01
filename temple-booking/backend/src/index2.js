@@ -83,3 +83,18 @@ async function generateResponse(userInput, conversationHistory) {
         return "TRANSFER_TO_MANAGER";
     }
 }
+
+// Helper function which Deletes audio file if it exists
+async function deleteAudioFile(sessionId) {
+    const audioFilePath = join(__dirname, 'audio', `${sessionId}.mp3`);
+    try {
+        if (existsSync(audioFilePath)) {
+            unlinkSync(audioFilePath);
+            console.log('Audio file deleted successfully.');
+        } else {
+            console.log('No audio file to delete.');
+        }
+    } catch (err) {
+        console.error('Failed to delete audio file:', err);
+    }
+}
