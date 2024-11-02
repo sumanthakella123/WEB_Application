@@ -84,17 +84,25 @@ async function generateResponse(userInput, conversationHistory) {
     }
 }
 
-// Helper function which Deletes audio file if it exists
-async function deleteAudioFile(sessionId) {
-    const audioFilePath = join(__dirname, 'audio', `${sessionId}.mp3`);
+// Helper function: Clean up audio files
+async function cleanupAudioFile(sessionId) {
+    const audioPath = join(__dirname, 'audio', `${sessionId}.mp3`);
     try {
-        if (existsSync(audioFilePath)) {
-            unlinkSync(audioFilePath);
-            console.log('Audio file deleted successfully.');
-        } else {
-            console.log('No audio file to delete.');
+        if (existsSync(audioPath)) {
+            unlinkSync(audioPath);
         }
-    } catch (err) {
-        console.error('Failed to delete audio file:', err);
+    } catch (error) {
+        console.error('Error cleaning up audio file:', error);
+    }
+}
+// Helper function: Clean up audio files
+async function cleanupAudioFile(sessionId) {
+    const audioPath = join(__dirname, 'audio', `${sessionId}.mp3`);
+    try {
+        if (existsSync(audioPath)) {
+            unlinkSync(audioPath);
+        }
+    } catch (error) {
+        console.error('Error cleaning up audio file:', error);
     }
 }
