@@ -20,38 +20,38 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// async function sendVastraSevaReminder(booking: any) {
-//   const emailContent = `
-//     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-//       <h2 style="color: #333; text-align: center;">Upcoming Vastra Seva Reminder</h2>
+async function sendVastraSevaReminder(booking: any) {
+  const emailContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <h2 style="color: #333; text-align: center;">Upcoming Vastra Seva Reminder</h2>
       
-//       <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
-//         <p>Dear ${booking.firstName} ${booking.lastName},</p>
+      <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
+        <p>Dear ${booking.firstName} ${booking.lastName},</p>
         
-//         <p>This is a reminder about your upcoming Vastra Seva service:</p>
+        <p>This is a reminder about your upcoming Vastra Seva service:</p>
         
-//         <div style="margin: 20px 0; padding: 15px; background-color: #fff; border-radius: 5px;">
-//           <p><strong>Deity:</strong> ${booking.deity}</p>
-//           <p><strong>Date:</strong> ${format(new Date(booking.date), 'EEEE, MMMM do, yyyy')}</p>
-//           ${booking.specialDay ? '<p><strong>Special Day Service</strong></p>' : ''}
-//         </div>
+        <div style="margin: 20px 0; padding: 15px; background-color: #fff; border-radius: 5px;">
+          <p><strong>Deity:</strong> ${booking.deity}</p>
+          <p><strong>Date:</strong> ${format(new Date(booking.date), 'EEEE, MMMM do, yyyy')}</p>
+          ${booking.specialDay ? '<p><strong>Special Day Service</strong></p>' : ''}
+        </div>
 
-//         <p>Please ensure you have made the necessary arrangements for the service.</p>
-//       </div>
+        <p>Please ensure you have made the necessary arrangements for the service.</p>
+      </div>
       
-//       <p style="color: #666; text-align: center; margin-top: 20px;">
-//         If you have any questions, please contact us at ${process.env.ADMIN_EMAIL}
-//       </p>
-//     </div>
-//   `;
+      <p style="color: #666; text-align: center; margin-top: 20px;">
+        If you have any questions, please contact us at ${process.env.ADMIN_EMAIL}
+      </p>
+    </div>
+  `;
 
-//   return await transporter.sendMail({
-//     from: process.env.SMTP_FROM_EMAIL,
-//     to: booking.email,
-//     subject: `Reminder: Upcoming Vastra Seva Service - ${format(new Date(booking.date), 'MMM do, yyyy')}`,
-//     html: emailContent,
-//   });
-// }
+  return await transporter.sendMail({
+    from: process.env.SMTP_FROM_EMAIL,
+    to: booking.email,
+    subject: `Reminder: Upcoming Vastra Seva Service - ${format(new Date(booking.date), 'MMM do, yyyy')}`,
+    html: emailContent,
+  });
+}
 
 async function sendSevaReminder(booking: any) {
   const emailContent = `
@@ -129,25 +129,25 @@ export default async function handler(
         seva: []
       };
 
-      // // Send reminders for Vastra Seva bookings
-      // for (const booking of vastraSevaBookings) {
-      //   try {
-      //     await sendVastraSevaReminder(booking);
-      //     results.vastraSeva.push({
-      //       id: booking.id,
-      //       email: booking.email,
-      //       status: 'sent'
-      //     });
-      //   } catch (error) {
-      //     console.error(`Failed to send reminder for Vastra Seva booking ${booking.id}:`, error);
-      //     results.vastraSeva.push({
-      //       id: booking.id,
-      //       email: booking.email,
-      //       status: 'failed',
-      //       error: error.message
-      //     });
-      //   }
-      // }
+      // Send reminders for Vastra Seva bookings
+      for (const booking of vastraSevaBookings) {
+        try {
+          await sendVastraSevaReminder(booking);
+          results.vastraSeva.push({
+            id: booking.id,
+            email: booking.email,
+            status: 'sent'
+          });
+        } catch (error) {
+          console.error(`Failed to send reminder for Vastra Seva booking ${booking.id}:`, error);
+          results.vastraSeva.push({
+            id: booking.id,
+            email: booking.email,
+            status: 'failed',
+            error: error.message
+          });
+        }
+      }
 
       // Send reminders for Seva bookings
       for (const booking of sevaBookings) {
