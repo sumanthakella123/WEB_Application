@@ -51,54 +51,54 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } 
   
-//   else if (req.method === 'GET') {
-//     try {
-//       const specialDates = await prisma.specialDate.findMany({
-//         select: {
-//           id: true,
-//           date: true,
-//           festivalName: true,
-//           price: true,
-//         },
-//         orderBy: {
-//           date: 'asc',
-//         },
-//       });
+  else if (req.method === 'GET') {
+    try {
+      const specialDates = await prisma.specialDate.findMany({
+        select: {
+          id: true,
+          date: true,
+          festivalName: true,
+          price: true,
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      });
 
-//       res.status(200).json(specialDates);
-//     } catch (error) {
-//       console.error('Error fetching special dates:', error);
-//       res.status(500).json({ message: 'Internal server error.' });
-//     }
-//   } 
+      res.status(200).json(specialDates);
+    } catch (error) {
+      console.error('Error fetching special dates:', error);
+      res.status(500).json({ message: 'Internal server error.' });
+    }
+  } 
   
-//   else if (req.method === 'DELETE') {
-//     const { dates } = req.body;
+  else if (req.method === 'DELETE') {
+    const { dates } = req.body;
 
-//     if (!Array.isArray(dates) || dates.length === 0) {
-//       return res.status(400).json({ message: 'Valid dates array is required for deletion.' });
-//     }
+    if (!Array.isArray(dates) || dates.length === 0) {
+      return res.status(400).json({ message: 'Valid dates array is required for deletion.' });
+    }
 
-//     try {
-//       await prisma.specialDate.deleteMany({
-//         where: {
-//           date: {
-//             in: dates.map(d => new Date(d))
-//           }
-//         }
-//       });
+    try {
+      await prisma.specialDate.deleteMany({
+        where: {
+          date: {
+            in: dates.map(d => new Date(d))
+          }
+        }
+      });
 
-//       return res.status(200).json({ 
-//         message: `Successfully deleted ${dates.length} special date(s).`
-//       });
-//     } catch (error) {
-//       console.error('Error deleting special dates:', error);
-//       return res.status(500).json({ message: 'Internal server error.' });
-//     }
-//   } 
+      return res.status(200).json({ 
+        message: `Successfully deleted ${dates.length} special date(s).`
+      });
+    } catch (error) {
+      console.error('Error deleting special dates:', error);
+      return res.status(500).json({ message: 'Internal server error.' });
+    }
+  } 
   
-//   else {
-//     res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
-//     res.status(405).json({ message: `Method ${req.method} not allowed.` });
-//   }
+  else {
+    res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
+    res.status(405).json({ message: `Method ${req.method} not allowed.` });
+  }
  }
