@@ -107,14 +107,18 @@ export default async function handler(
       });
 
       // In sandbox/development, return more detailed error information
-      // res.status(500).json({
-      //   message: 'Failed to create payment link. Please try again or contact support.',
-      //   details: process.env.NODE_ENV === 'development' ? {
-      //     error: error.message,
-      //     errors: error.errors,
-      //     stack: error.stack
-      //   } : undefined
-      // });
+      res.status(500).json({
+        message:
+          "Failed to create payment link. Please try again or contact support.",
+        details:
+          process.env.NODE_ENV === "development"
+            ? {
+                error: error.message,
+                errors: error.errors,
+                stack: error.stack,
+              }
+            : undefined,
+      });
     }
   } else {
     res.setHeader("Allow", ["POST"]);
