@@ -23,6 +23,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(500).json({ message: 'Error updating booking' });
       }
 
+    case 'DELETE':
+      // Implementation coming soon
+      return res.status(501).json({ message: 'Delete functionality not implemented yet' });
+
     default:
       res.setHeader('Allow', ['PUT', 'DELETE']);
       return res.status(405).end(`Method ${req.method} Not Allowed`);
