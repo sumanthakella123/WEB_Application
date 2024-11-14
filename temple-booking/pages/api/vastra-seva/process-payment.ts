@@ -3,12 +3,13 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Client, Environment } from "square";
 import prisma from "../../../utils/prisma";
 
-// const squareClient = new Client({
-//   environment: process.env.NODE_ENV === 'production'
-//     ? Environment.Production
-//     : Environment.Sandbox,
-//   accessToken: process.env.SQUARE_ACCESS_TOKEN,
-// });
+const squareClient = new Client({
+  environment:
+    process.env.NODE_ENV === "production"
+      ? Environment.Production
+      : Environment.Sandbox,
+  accessToken: process.env.SQUARE_ACCESS_TOKEN,
+});
 
 export default async function handler(
   req: NextApiRequest,
