@@ -24,8 +24,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
     case 'DELETE':
-      // Implementation coming soon
-      return res.status(501).json({ message: 'Delete functionality not implemented yet' });
+      try {
+        await prisma.aI_Booking.delete({
+          where: { id: bookingId },
+        });
+        return res.status(200).json({ message: 'Booking deleted successfully' });
+      } catch (error) {
+        console.error('Error deleting AI booking:', error);
+        return res.status(500).json({ message: 'Error deleting booking' });
+      }
 
     default:
       res.setHeader('Allow', ['PUT', 'DELETE']);
