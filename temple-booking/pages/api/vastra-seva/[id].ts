@@ -69,59 +69,59 @@ const sendEmail = async (booking: any, type: 'update' | 'cancel') => {
   });
 };
 
-// export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-//   const { id } = req.query;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { id } = req.query;
 
-//   if (req.method === 'PUT') {
-//     try {
-//       const updatedBooking = await prisma.vastraSevaBooking.update({
-//         where: { id: parseInt(id as string, 10) },
-//         data: req.body,
-//       });
+  if (req.method === 'PUT') {
+    try {
+      const updatedBooking = await prisma.vastraSevaBooking.update({
+        where: { id: parseInt(id as string, 10) },
+        data: req.body,
+      });
 
-//       // Send update email
-//       try {
-//         await sendEmail(updatedBooking, 'update');
-//       } catch (emailError) {
-//         console.error('Error sending update email:', emailError);
-//       }
+      // Send update email
+      try {
+        await sendEmail(updatedBooking, 'update');
+      } catch (emailError) {
+        console.error('Error sending update email:', emailError);
+      }
 
-//       return res.status(200).json(updatedBooking);
-//     } catch (error) {
-//       console.error('Error updating booking:', error);
-//       return res.status(500).json({ error: 'Unable to update booking' });
-//     }
-//   }
+      return res.status(200).json(updatedBooking);
+    } catch (error) {
+      console.error('Error updating booking:', error);
+      return res.status(500).json({ error: 'Unable to update booking' });
+    }
+  }
 
-//   if (req.method === 'DELETE') {
-//     try {
-//       // Get booking details before deletion
-//       const booking = await prisma.vastraSevaBooking.findUnique({
-//         where: { id: parseInt(id as string, 10) },
-//       });
+  if (req.method === 'DELETE') {
+    try {
+      // Get booking details before deletion
+      const booking = await prisma.vastraSevaBooking.findUnique({
+        where: { id: parseInt(id as string, 10) },
+      });
 
-//       if (!booking) {
-//         return res.status(404).json({ error: 'Booking not found' });
-//       }
+      if (!booking) {
+        return res.status(404).json({ error: 'Booking not found' });
+      }
 
-//       // Delete the booking
-//       await prisma.vastraSevaBooking.delete({
-//         where: { id: parseInt(id as string, 10) },
-//       });
+      // Delete the booking
+      await prisma.vastraSevaBooking.delete({
+        where: { id: parseInt(id as string, 10) },
+      });
 
-//       // Send cancellation email
-//       try {
-//         await sendEmail(booking, 'cancel');
-//       } catch (emailError) {
-//         console.error('Error sending cancellation email:', emailError);
-//       }
+      // Send cancellation email
+      try {
+        await sendEmail(booking, 'cancel');
+      } catch (emailError) {
+        console.error('Error sending cancellation email:', emailError);
+      }
 
-//       return res.status(200).json({ message: 'Booking deleted successfully' });
-//     } catch (error) {
-//       console.error('Error deleting booking:', error);
-//       return res.status(500).json({ error: 'Unable to delete booking' });
-//     }
-//   }
+      return res.status(200).json({ message: 'Booking deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting booking:', error);
+      return res.status(500).json({ error: 'Unable to delete booking' });
+    }
+  }
 
-//   return res.status(405).json({ error: 'Method not allowed' });
-// }
+  return res.status(405).json({ error: 'Method not allowed' });
+}
