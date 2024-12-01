@@ -27,3 +27,13 @@ const conversationHistoryTemplate = [
         content: "Hello, I'm Neela from Albany Hindu Temple. How can I assist you today?",
     },
 ];    
+
+//textToSpeech function
+async function textToSpeech(text, sessionId) {
+    try {
+        // Placeholder for API call
+    } catch (error) {
+        console.error('Error in textToSpeech:', error.message);
+        return null;
+    }
+}
